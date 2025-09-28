@@ -3,116 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سایت پرسش و پاسخ</title>
+    <title>دائرةالمعارف هوشمند</title>
     <style>
         body {
             font-family: Tahoma;
             direction: rtl;
             text-align: right;
-            background: #f0f0f0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 20px;
             margin: 0;
+            min-height: 100vh;
         }
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             background: white;
             padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
         h1 {
             color: #2c3e50;
             text-align: center;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
         }
         textarea {
             width: 100%;
             height: 100px;
-            padding: 12px;
+            padding: 15px;
             margin: 15px 0;
             border: 2px solid #ddd;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 16px;
             font-family: Tahoma;
         }
         button {
-            background: #27ae60;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 12px 30px;
             border: none;
-            border-radius: 6px;
+            border-radius: 25px;
             cursor: pointer;
             font-size: 16px;
             display: block;
             margin: 0 auto;
+            transition: transform 0.3s;
         }
         button:hover {
-            background: #219a52;
+            transform: translateY(-2px);
         }
         .answer {
             margin-top: 25px;
-            padding: 20px;
-            background: #e8f6f3;
-            border-radius: 8px;
-            border-right: 4px solid #27ae60;
-        }
-        .instructions {
-            background: #fff3cd;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 20px 0;
-            color: #856404;
-        }
-        .faq {
-            margin-top: 30px;
-            padding: 15px;
+            padding: 25px;
             background: #f8f9fa;
+            border-radius: 10px;
+            border-right: 5px solid #667eea;
+            display: none;
+        }
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .category-btn {
+            background: #3498db;
+            color: white;
+            padding: 10px;
+            border: none;
             border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
         }
-        .faq a {
-            color: #2980b9;
-            text-decoration: none;
-            display: block;
-            padding: 5px 0;
+        .category-btn:hover {
+            background: #2980b9;
         }
-        .faq a:hover {
-            color: #1a5276;
+        .topic-list {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .topic-list ul {
+            columns: 2;
+            padding-right: 20px;
+        }
+        .topic-list li {
+            margin-bottom: 8px;
+            cursor: pointer;
+            color: #2c3e50;
+        }
+        .topic-list li:hover {
+            color: #e74c3c;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🤖 سوال بپرس، جواب بگیر!</h1>
+        <h1>📚 دائرةالمعارف هوشمند</h1>
+        <div class="subtitle">پایۀ اول تا دهم + دانش جهانی</div>
         
-        <div class="instructions">
-            <strong>راهنما:</strong> سوال خودت رو اینجا بنویس و روی ارسال کلیک کن
+        <textarea id="question" placeholder="هر سوالی داری درباره: علوم، ریاضی، تاریخ، جغرافیا، ادبیات، نجوم..."></textarea>
+        
+        <button onclick="sendQuestion()">دریافت پاسخ دانش‌نامه‌ای</button>
+        
+        <div class="categories">
+            <button class="category-btn" onclick="addExample('علوم پایه')">🔬 علوم پایه</button>
+            <button class="category-btn" onclick="addExample('ریاضیات')">📐 ریاضیات</button>
+            <button class="category-btn" onclick="addExample('نجوم و فضا')">🌌 نجوم</button>
+            <button class="category-btn" onclick="addExample('تاریخ جهان')">🏛️ تاریخ</button>
+            <button class="category-btn" onclick="addExample('جغرافیا')">🌍 جغرافیا</button>
+            <button class="category-btn" onclick="addExample('ادبیات فارسی')">📖 ادبیات</button>
+        </div>
+        <div class="topic-list">
+            <h3>📋 موضوعات پربسامد:</h3>
+            <ul>
+                <li onclick="addExample('سلول چیست؟')">سلول چیست؟</li>
+                <li onclick="addExample('کهکشان راه شیری')">کهکشان راه شیری</li>
+                <li onclick="addExample('سیاره های منظومه شمسی')">سیاره های منظومه شمسی</li>
+                <li onclick="addExample('فتوسنتز چیست؟')">فتوسنتز چیست؟</li>
+                <li onclick="addExample('قضیه فیثاغورث')">قضیه فیثاغورث</li>
+                <li onclick="addExample('دایناسورها')">دایناسورها</li>
+                <li onclick="addExample('انقلاب اسلامی ایران')">انقلاب اسلامی ایران</li>
+                <li onclick="addExample('شاعران معروف فارسی')">شاعران معروف فارسی</li>
+            </ul>
         </div>
         
-        <textarea id="question" placeholder="سوال خود را اینجا بنویسید..."></textarea>
-        
-        <button onclick="sendQuestion()">ارسال سوال</button>
-        
-        <div id="answer" class="answer" style="display: none;">
+        <div id="answer" class="answer">
             <!-- پاسخ اینجا نمایش داده میشه -->
-        </div>
-
-        <div class="faq">
-            <h3>سوالات متداول:</h3>
-            <a href="#" onclick="addExample('چطور برنامه نویسی یاد بگیرم؟'); return false;">چطور برنامه نویسی یاد بگیرم؟</a>
-            <a href="#" onclick="addExample('چطور سایت بسازم؟'); return false;">چطور سایت بسازم؟</a>
-            <a href="#" onclick="addExample('بهترین زبان برنامه نویسی برای شروع کدام است؟'); return false;">بهترین زبان برنامه نویسی برای شروع کدام است؟</a>
         </div>
     </div>
 
     <script>
-        // تابع برای پر کردن سوالات مثال
+        // تابع برای پر کردن سوالات
         function addExample(question) {
             document.getElementById('question').value = question;
         }
 
         // تابع اصلی برای ارسال سوال
         function sendQuestion() {
-            var question = document.getElementById('question').value;
+            var question = document.getElementById('question').value.trim();
             var answerDiv = document.getElementById('answer');
             
             if (question === "") {
@@ -122,52 +157,163 @@
             
             // نمایش پاسخ در حال پردازش
             answerDiv.style.display = 'block';
-            answerDiv.innerHTML = "<p>در حال پردازش سوال...</p>";
+            answerDiv.innerHTML = "<p>🔍 در جستجوی دانش‌نامه...</p>";
             
             // تولید پاسخ بر اساس سوال
-        var answer = generateAnswer(question);
+            var answer = generateAnswer(question);
             
             // نمایش پاسخ نهایی
             setTimeout(function() {
                 answerDiv.innerHTML = answer;
-            }, 1000);
+            }, 1500);
         }
         
-        // تابع برای تولید پاسخ
+        // دانش‌نامه جامع
         function generateAnswer(question) {
             var lowerQuestion = question.toLowerCase();
             
-            if (lowerQuestion.includes('برنامه') || lowerQuestion.includes('کدنویسی')) {
-                return '<h3>🎯 پاسخ به سوال برنامه نویسی:</h3>' +
-                       '<p>برای شروع برنامه نویسی:</p>' +
+            // 🔬 علوم پایه و زیست‌شناسی
+            if (lowerQuestion.includes('سلول') || lowerQuestion.includes('یاخته')) {
+                return '<h3>🔬 سلول (یاخته)</h3>' +
+                       '<p><strong>تعریف:</strong> سلول کوچک‌ترین واحد سازنده موجودات زنده است.</p>' +
+                       '<p><strong>انواع سلول:</strong></p>' +
+                       '<ul>' +
+                       '<li><strong>سلول پروکاریوت:</strong> بدون هسته مشخص (باکتری‌ها)</li>' +
+                       '<li><strong>سلول یوکاریوت:</strong> دارای هسته مشخص (گیاهان، جانوران، قارچ‌ها)</li>' +
+                       '</ul>' +
+                       '<p><strong>اجزای اصلی سلول جانوری:</strong></p>' +
                        '<ol>' +
-                       '<li>زبان Python یا JavaScript رو انتخاب کن</li>' +
-                       '<li>از آموزش‌های رایگان YouTube استفاده کن</li>' +
-                       '<li>هر روز تمرین کن</li>' +
-                       '<li>یک پروژه کوچک شروع کن</li>' +
-                       '</ol>';
+                       '<li>هسته (مرکز کنترل سلول)</li>' +
+                       '<li>سیتوپلاسم (مایع درون سلول)</li>' +
+                       '<li>غشای سلولی (پوستۀ سلول)</li>' +
+                       '<li>میتوکندری (تولید انرژی)</li>' +
+                       '</ol>' +
+                       '<p><em>منبع: علوم پایه هفتم</em></p>';
             }
-            else if (lowerQuestion.includes('سایت') || lowerQuestion.includes('وب')) {
-                return '<h3>🌐 پاسخ به سوال ساخت سایت:</h3>' +
-                       '<p>برای ساخت سایت:</p>' +
+            
+            else if (lowerQuestion.includes('فتوسنتز')) {
+                return '<h3>🌿 فتوسنتز</h3>' +
+                       '<p><strong>تعریف:</strong> فرآیند تولید غذا در گیاهان با استفاده از نور خورشید.</p>' +
+                       '<p><strong>فرمول شیمیایی:</strong></p>' +
+                       '<p>۶CO₂ + ۶H₂O + نور → C₆H₁₂O₆ + ۶O₂</p>' +
+                       '<p><strong>مراحل فتوسنتز:</strong></p>' +
                        '<ol>' +
-                       '<li>HTML و CSS یاد بگیر</li>' +
-                       '<li>JavaScript اضافه کن</li>' +
-                       '<li>از GitHub Pages برای میزبانی استفاده کن</li>' +
-                       '<li>دومین خودت رو ثبت کن</li>' +
-                       '</ol>';
+                       '<li>جذب نور توسط کلروفیل</li>' +
+                       '<li>تجزیه آب به اکسیژن و هیدروژن</li>' +
+                       '<li>ترکیب دی‌اکسید کربن با هیدروژن برای تولید گلوکز</li>' +
+                       '</ol>' +
+                       '<p><em>منبع: علوم پایه هشتم</em></p>';
+                }
+            
+            // 🌌 نجوم و فضا
+            else if (lowerQuestion.includes('کهکشان') || lowerQuestion.includes('راه شیری')) {
+                return '<h3>🌌 کهکشان راه شیری</h3>' +
+                       '<p><strong>تعریف:</strong> کهکشان مارپیچی که منظومه شمسی در آن قرار دارد.</p>' +
+                       '<p><strong>ویژگی‌ها:</strong></p>' +
+                       '<ul>' +
+                       '<li>قطر: حدود ۱۰۰,۰۰۰ سال نوری</li>' +
+                       '<li>تعداد ستارگان: حدود ۱۰۰-۴۰۰ میلیارد ستاره</li>' +
+                       '<li>سن: حدود ۱۳.۶ میلیارد سال</li>' +
+                       '<li>شکل: مارپیچی میلۀی</li>' +
+                       '</ul>' +
+                       '<p><strong>ساختار:</strong></p>' +
+                       '<ol>' +
+                       '<li>هسته مرکزی</li>' +
+                       '<li>دیسک کهکشانی</li>' +
+                       '<li>بازوهای مارپیچی</li>' +
+                       '<li>هاله کهکشانی</li>' +
+                       '</ol>' +
+                       '<p><em>منبع: دانش نجوم</em></p>';
             }
-            else if (lowerQuestion.includes('سلام')) {
-                return '<h3>👋 سلام!</h3>' +
-                       '<p>سلام! چطور می‌تونم کمکتون کنم؟</p>' +
-                       '<p>می‌تونی در مورد برنامه نویسی، ساخت سایت، یا هر موضوع دیگه‌ای سوال بپرسی.</p>';
+            
+            else if (lowerQuestion.includes('منظومه شمسی') || lowerQuestion.includes('سیاره')) {
+                return '<h3>🪐 منظومه شمسی</h3>' +
+                       '<p><strong>سیارات منظومه شمسی به ترتیب فاصله از خورشید:</strong></p>' +
+                       '<ol>' +
+                       '<li><strong>تیر (عطارد):</strong> کوچک‌ترین و نزدیک‌ترین به خورشید</li>' +
+                       '<li><strong>ناهید (زهره):</strong> داغ‌ترین سیاره</li>' +
+                       '<li><strong>زمین:</strong> تنها سیاره دارای حیات</li>' +
+                       '<li><strong>بهرام (مریخ):</strong> سیاره سرخ</li>' +
+                       '<li><strong>مشتری (ژوپیتر):</strong> بزرگ‌ترین سیاره</li>' +
+                       '<li><strong>کیوان (زحل):</strong> دارای حلقه‌های یخی</li>' +
+                       '<li><strong>اورانوس:</strong> سیاره یخی</li>' +
+                       '<li><strong>نپتون:</strong> دورترین سیاره</li>' +
+                       '</ol>' +
+                       '<p><em>منبع: علوم پایه پنجم و ششم</em></p>';
             }
+            
+            // 📐 ریاضیات
+            else if (lowerQuestion.includes('فیثاغورث') || lowerQuestion.includes('مثلث')) {
+                return '<h3>📐 قضیه فیثاغورث</h3>' +
+                       '<p><strong>قضیه:</strong> در مثلث قائم‌الزاویه، مجذور وتر برابر است با مجموع مجذورهای دو ضلع دیگر.</p>' +
+                       '<p><strong>فرمول:</strong> a² + b² = c²</p>' +
+                       '<p><strong>شرح:</strong></p>' +
+                       '<ul>' +
+                       '<li>a و b: اضلاع قائمه</li>' +
+                       '<li>c: وتر (ضلع روبروی زاویه قائمه)</li>' +
+                       '</ul>' +
+                       '<p><strong>مثال:</strong> اگر دو ضلع قائمه ۳ و ۴ باشند، وتر برابر است با:</p>' +
+                       '<p>۳² + ۴² = ۹ + ۱۶ = ۲۵ → c = √۲۵ = ۵</p>' +
+                       '<p><em>منبع: ریاضی پایه هشتم</em></p>';
+            }
+            
+            // 🏛️ تاریخ
+            else if (lowerQuestion.includes('انقلاب') || lowerQuestion.includes('اسلامی')) {
+                return '<h3>🏛️ انقلاب اسلامی ایران</h3>' +
+                       '<p><strong>زمان:</strong> ۱۳۵۷ هجری شمسی (۱۹۷۹ میلادی)</p>' +
+                       '<p><strong>رهبر:</strong> امام خمینی (ره)</p>' +
+                       '<p><strong>علل اصلی انقلاب:</strong></p>' +
+                       '<ol>' +
+                       '<li>استبداد سیاسی</li>' +
+                       '<li>وابستگی به غرب</li>' +
+                       '<li>فاصله طبقاتی</li>' +
+                       '<li>مذهبی بودن مردم ایران</li>' +
+                       '</ol>' +
+                       '<p><strong>نتایج:</strong></p>' +
+                       '<ul>' +
+                   '<li>پایان نظام پادشاهی</li>' +
+                       '<li>تشکیل جمهوری اسلامی</li>' +
+                       '<li>استقلال سیاسی</li>' +
+                       '</ul>' +
+                       '<p><em>منبع: تاریخ معاصر ایران</em></p>';
+            }
+            
+            // 📖 ادبیات
+            else if (lowerQuestion.includes('شاعر') || lowerQuestion.includes('ادبیات')) {
+                return '<h3>📖 شاعران بزرگ فارسی</h3>' +
+                       '<p><strong>شاعران کلاسیک:</strong></p>' +
+                       '<ul>' +
+                       '<li><strong>فردوسی:</strong> شاهنامه (حماسه)</li>' +
+                       '<li><strong>سعدی:</strong> گلستان و بوستان (اخلاق)</li>' +
+                       '<li><strong>حافظ:</strong> دیوان غزلیات (عرفان)</li>' +
+                       '<li><strong>مولوی:</strong> مثنوی معنوی (عرفان)</li>' +
+                       '</ul>' +
+                       '<p><strong>شاعران معاصر:</strong></p>' +
+                       '<ul>' +
+                       '<li>نیما یوشیج (پدر شعر نو)</li>' +
+                       '<li>احمد شاملو</li>' +
+                       '<li>فروغ فرخزاد</li>' +
+                       '<li>سیمین بهبهانی</li>' +
+                       '</ul>' +
+                       '<p><em>منبع: ادبیات فارسی</em></p>';
+            }
+            
+            // پاسخ عمومی
             else {
-                return '<h3>🤔 پاسخ:</h3>' +
-                       '<p>سوال جالبی پرسیدی: "' + question + '"</p>' +
-                       '<p>متأسفانه الان نمی‌تونم به این سوال پاسخ بدم. لطفاً سوالات مربوط به برنامه نویسی یا ساخت سایت بپرس.</p>';
+                return '<h3>📚 پاسخ دانش‌نامه‌ای</h3>' +
+                       '<p><strong>سوال شما:</strong> "' + question + '"</p>' +
+                       '<p>برای دریافت اطلاعات دقیق‌تر، لطفاً سوالت رو در یکی از این زمینه‌ها مطرح کن:</p>' +
+                       '<ul>' +
+                       '<li>🔬 <strong>علوم:</strong> سلول، فتوسنتز، DNA، ژنتیک</li>' +
+                       '<li>🌌 <strong>نجوم:</strong> کهکشان‌ها، سیارات، ستارگان</li>' +
+                       '<li>📐 <strong>ریاضی:</strong> هندسه، جبر، حسابان</li>' +
+                       '<li>🏛️ <strong>تاریخ:</strong> ایران باستان، جهان معاصر</li>' +
+                       '<li>🌍 <strong>جغرافیا:</strong> قاره‌ها، کشورها، آب و هوا</li>' +
+                       '<li>📖 <strong>ادبیات:</strong> شاعران، نویسندگان، سبک‌ها</li>' +
+                       '</ul>' +
+                       '<p>می‌تونی از دکمه‌های بالای صفحه استفاده کنی! 😊</p>';
             }
         }
     </script>
 </body>
-</html>
+</html> 
