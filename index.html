@@ -1,10 +1,173 @@
 <!DOCTYPE html>
-<html>
+<html lang="fa" dir="rtl">
 <head>
-    <title>سایت من</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سایت پرسش و پاسخ با DeepSeek</title>
+    <style>
+        body {
+            font-family: Tahoma;
+            direction: rtrl;
+            text-align: right;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        textarea {
+            width: 100%;
+            height: 120px;
+            padding: 15px;
+            margin: 15px 0;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+        button {
+            background: #3498db;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .answer {
+            margin-top: 25px;
+            padding: 20px;
+            background: #e8f4fc;
+            border-radius: 10px;
+            border-right: 5px solid #3498db;
+        }
+        .instructions {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            color: #856404;
+        }
+    </style>
 </head>
 <body>
-    <h1>سلام! این سایت منه</h1>
-    <p>کار میکنه! 🎉</p>
+    <div class="container">
+        <h1>🤖 سوال بپرس، جواب بگیر!</h1>
+        
+        <div class="instructions">
+            <strong>راهنما:</strong> سوال خودت رو اینجا بنویس. من (DeepSeek) جواب رو برات آماده می‌کنم و در همین صفحه قرار می‌دم.
+        </div>
+        
+        <textarea id="question" placeholder="سوال خود را اینجا بنویسید... مثلاً: چطور برنامه نویسی رو شروع کنم؟"></textarea>
+        
+        <button onclick="processQuestion()">ارسال سوال</button>
+        
+        <div id="answer" class="answer">
+            <!-- پاسخ ها اینجا نمایش داده میشن -->
+        </div>
+
+        <div style="margin-top: 30px; padding: 15px; background: #f8f9fa; border-radius: 10px;">
+            <h3>سوالات متداول:</h3>
+            <ul>
+                <li><a href="#" onclick="askExample('چطور برنامه نویسی یاد بگیرم؟')">چطور برنامه نویسی یاد بگیرم؟</a></li>
+                <li><a href="#" onclick="askExample('چطور سایت بسازم؟')">چطور سایت بسازم؟</a></li>
+                <li><a href="#" onclick="askExample('بهترین زبان برنامه نویسی برای شروع کدام است؟')">بهترین زبان برنامه نویسی برای شروع کدام است؟</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // تابع برای پر کردن مثال‌ها
+        function askExample(question) {
+            document.getElementById('question').value = question;
+        }
+
+        // تابع اصلی برای پردازش سوال
+        function processQuestion() {
+            const question = document.getElementById('question').value.trim();
+            const answerDiv = document.getElementById('answer');
+            
+            if (!question) {
+                alert('لطفاً یک سوال بنویسید');
+                return;
+            }
+            
+            // نمایش پیام در حال پردازش
+            answerDiv.innerHTML = 
+                <div style="text-align: center; color: #666;">
+                    <p>⏳ سوال شما برای DeepSeek ارسال شد...</p>
+                    <p><small>پاسخ به زودی در اینجا نمایش داده می‌شود</small></p>
+                    <p><strong>سوال شما:</strong> "${question}"</p>
+                </div>
+            ;
+            
+            // شبیه‌سازی ارسال به سرور
+            setTimeout(() => {
+                // در حالت واقعی، اینجا باید به API واقعی وصل بشی
+                       const simulatedAnswer = generateAnswer(question);
+                displayAnswer(question, simulatedAnswer);
+            }, 2000);
+        }
+        
+        // تابع برای تولید پاسخ (شبیه‌سازی شده)
+        function generateAnswer(question) {
+            const lowerQuestion = question.toLowerCase();
+            
+            if (lowerQuestion.includes('برنامه') || lowerQuestion.includes('کدنویسی')) {
+                return 🎯 <strong>برای یادگیری برنامه نویسی:</strong><br><br>
+                ۱. <strong>یک زبان ساده انتخاب کن</strong> - Python یا JavaScript پیشنهاد می‌شن<br>
+                ۲. <strong>از منابع رایگان استفاده کن</strong> - YouTube, freeCodeCamp, Coursera<br>
+                ۳. <strong>روزانه تمرین کن</strong> - حتی 30 دقیقه در روز<br>
+                ۴. <strong>پروژه عملی بساز</strong> - شروع کن به ساخت یه پروژه کوچیک<br>
+                ۵. <strong>تو جامعه برنامه‌نویسی فعال باش</strong> - سوال بپرس و مشارکت کن<br><br>
+                <em>منبع: DeepSeek Assistant</em>;
+            }
+            else if (lowerQuestion.includes('سایت') || lowerQuestion.includes('وب')) {
+                return 🌐 <strong>برای ساخت سایت:</strong><br><br>
+                ۱. <strong>HTML/CSS یاد بگیر</strong> - اساس هر سایتی<br>
+                ۲. <strong>JavaScript اضافه کن</strong> - برای تعاملی کردن سایت<br>
+                ۳. <strong>از GitHub Pages استفاده کن</strong> - میزبانی رایگان<br>
+                ۴. <strong>پروژه‌ات رو آنلاین کن</strong> - همون کاری که الان داری می‌کنی!<br><br>
+                <em>منبع: DeepSeek Assistant</em>;
+            }
+            else if (lowerQuestion.includes('زبان') || lowerQuestion.includes('کدام')) {
+                return 📚 <strong>بهترین زبان‌ها برای شروع:</strong><br><br>
+                • <strong>Python</strong> - ساده، همه‌کاره، بازار کار عالی<br>
+                • <strong>JavaScript</strong> - برای وب، فراگیر، جامعه بزرگ<br>
+                • <strong>Java</strong> - شرکتی، پایدار، فرصت‌های شغلی زیاد<br><br>
+                <em>منبع: DeepSeek Assistant</em>;
+            }
+            else {
+                return 🤔 <strong>سوال جالبی پرسیدی!</strong><br><br>
+                متأسفانه الان نمی‌تونم مستقیماً به سوال "<strong>${question}</strong>" پاسخ بدم.<br><br>
+                <strong>پیشنهاد من:</strong><br>
+                • سوالت رو دقیق‌تر بپرس<br>
+                • از سوالات نمونه بالا استفاده کن<br>
+                • یا مستقیماً از DeepSeek بپرس<br><br>
+                <em>منبع: DeepSeek Assistant</em>;
+            }
+        }
+        
+        // تابع برای نمایش پاسخ
+        function displayAnswer(question, answer) {
+            const answerDiv = document.getElementById('answer');
+            answerDiv.innerHTML = 
+                <h3>💡 پاسخ به سوال شما:</h3>
+                <p><strong>سوال:</strong> "${question}"</p>
+                <div style="margin-top: 15px;">${answer}</div>
+                <div style="margin-top: 20px; padding: 10px; background: #d4edda; border-radius: 5px;">
+                    <small>✅ این پاسخ توسط DeepSeek Assistant تولید شده است</small>
+                </div>
+            ;
+        }
+    </script>
 </body>
 </html>
